@@ -10,4 +10,3 @@ namespace ProductsApi.Data
         public DbSet<Product> Products { get; set; }
     }
 }
-
