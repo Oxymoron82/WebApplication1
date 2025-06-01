@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OAuth Callback</title>
+  </head>
+  <body>
+    <h2>Kirjautuminen onnistui</h2>
+    <p id="status">Käsitellään...</p>
+    <p><strong>ID Token:</strong> <span id="idToken"></span></p>
+
+    <script>
+      function getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+      }
+
+      async function exchangeCodeForToken(code) {
+        const tokenUrl = "https://oauth2.googleapis.com/token";
+
+        const data = new URLSearchParams({
+          client_id:
+            "533848342255-88co371a1clr84im2i5tnjdkj8m9hucu.apps.googleusercontent.com",
+          client_secret: "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",
+          code: code,
+          grant_type: "authorization_code",
+          redirect_uri: "http://localhost:5000/afterlogin.html",
+        });
+
+        try {
+          const response = await fetch(tokenUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: data,
+          });
+
+          const tokenInfo = await response.json();
+
+          if (tokenInfo.id_token) {
+            document.getElementById("status").innerText =
+              "Kirjautuminen onnistui!";
+            document.getElementById("idToken").innerText = tokenInfo.id_token;
+            saveIdToken(tokenInfo.id_token);
+          } else {
+            document.getElementById("status").innerText =
+              "Virhe: ID Tokenia ei saatu.";
+          }
+        } catch (error) {
+          document.getElementById("status").innerText =
+            "Virhe: " + error.message;
+        }
+      }
+
+      function saveIdToken(token) {
+        document.cookie = `id_token=${token}; Path=/; Secure; HttpOnly; SameSite=Strict`;
+      }
+
+      const code = getQueryParam("code");
+
+      if (code) {
+        exchangeCodeForToken(code);
+      } else {
+        document.getElementById("status").innerText =
+          "Virhe: OAuth-koodia ei löydy.";
+      }
+    </script>
+  </body>
+</html>

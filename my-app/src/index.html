@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google OAuth Kirjautuminen</title>
+  </head>
+  <body>
+    <h2>Kirjaudu sisään Googlella</h2>
+    <button onclick="loginWithGoogle()">Kirjaudu</button>
+
+    <script>
+      function loginWithGoogle() {
+        const clientId =
+          "533848342255-88co371a1clr84im2i5tnjdkj8m9hucu.apps.googleusercontent.com"; // Замените на ваш Google Client ID
+        const redirectUri = "http://localhost:5000/afterlogin.html"; // Новый порт!
+        const scope = "openid email profile";
+        const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&access_type=offline`;
+
+        window.location.href = authUrl;
+      }
+    </script>
+  </body>
+</html>
