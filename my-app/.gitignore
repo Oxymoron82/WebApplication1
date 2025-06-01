@@ -1,37 +1,23 @@
-# Build folders
-bin/
-obj/
-
-# User-specific files
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-
-# Visual Studio folder
-.vs/
-
-# OS generated files
-.DS_Store
+# Node.js dependencies
+node_modules/
 
 # Logs
-*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Publish folder
-publish/
+# Production build
+build/
+dist/
 
-# Rider IDE
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Misc
+.DS_Store
+
+# Optional: локальные настройки редактора
+.vscode/
 .idea/
-
-# Dotnet local tools
-.tool/
-
-# Resharper
-_ReSharper*/
-
-# DotCover
-*.dotCover
-
-# Others
-*.dbmdl
-*.pdb
